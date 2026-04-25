@@ -509,27 +509,27 @@
     <div class="sidebar-logo">Auto<span>Content</span></div>
     <nav class="sidebar-nav">
       <div class="nav-section">Main</div>
-      <a class="nav-item active" onclick="showTab('overview')">
+      <a class="nav-item active" onclick="showTab('overview', this)">
         <span class="icon">📊</span> Overview
       </a>
-      <a class="nav-item" onclick="showTab('clients')">
+      <a class="nav-item" onclick="showTab('clients', this)">
         <span class="icon">👥</span> Clients
       </a>
-      <a class="nav-item" onclick="showTab('calendar')">
+      <a class="nav-item" onclick="showTab('calendar', this)">
         <span class="icon">📅</span> Content Calendar
       </a>
-      <a class="nav-item" onclick="showTab('activity')">
+      <a class="nav-item" onclick="showTab('activity', this)">
         <span class="icon">⚡</span> Activity
       </a>
 
       <div class="nav-section">Automation</div>
-      <a class="nav-item">
+      <a class="nav-item" onclick="showTab('blogs', this)">
         <span class="icon">📝</span> Blog Posts
       </a>
-      <a class="nav-item">
+      <a class="nav-item" onclick="showTab('reels', this)">
         <span class="icon">🎬</span> Instagram Reels
       </a>
-      <a class="nav-item">
+      <a class="nav-item" onclick="showTab('pipelines', this)">
         <span class="icon">⚙️</span> Pipelines
       </a>
 
@@ -537,7 +537,7 @@
       <a class="nav-item" href="index.html">
         <span class="icon">🌐</span> Public Site
       </a>
-      <a class="nav-item">
+      <a class="nav-item" onclick="showTab('support', this)">
         <span class="icon">💬</span> Support
       </a>
     </nav>
@@ -807,6 +807,116 @@
         </div>
       </div>
 
+      <!-- ── BLOG POSTS TAB ── -->
+      <div id="tab-blogs" style="display:none">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Blog Posts Published</span>
+            <span class="card-action">All clients</span>
+          </div>
+          <div class="card-body" style="padding:0">
+            <table class="client-table">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Client</th>
+                  <th>Status</th>
+                  <th>Words</th>
+                  <th>Published</th>
+                </tr>
+              </thead>
+              <tbody id="blog-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── REELS TAB ── -->
+      <div id="tab-reels" style="display:none">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Instagram Reels Published</span>
+            <span class="card-action">All clients</span>
+          </div>
+          <div class="card-body" style="padding:0">
+            <table class="client-table">
+              <thead>
+                <tr>
+                  <th>Caption / Topic</th>
+                  <th>Client</th>
+                  <th>Status</th>
+                  <th>Music Track</th>
+                  <th>Published</th>
+                </tr>
+              </thead>
+              <tbody id="reels-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PIPELINES TAB ── -->
+      <div id="tab-pipelines" style="display:none">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Automation Pipelines</span>
+            <span class="card-action">8 active</span>
+          </div>
+          <div class="card-body" style="padding:0">
+            <table class="client-table">
+              <thead>
+                <tr>
+                  <th>Client</th>
+                  <th>Blog Pipeline</th>
+                  <th>Reels Pipeline</th>
+                  <th>Last Run</th>
+                  <th>Next Run</th>
+                  <th>Uptime</th>
+                </tr>
+              </thead>
+              <tbody id="pipeline-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SUPPORT TAB ── -->
+      <div id="tab-support" style="display:none">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Support & Help</span>
+          </div>
+          <div class="card-body">
+            <div class="activity-list">
+              <div class="activity-item">
+                <div class="activity-icon" style="background:rgba(37,99,235,0.12)">📧</div>
+                <div class="activity-text">
+                  <p><strong>Email Support</strong></p>
+                  <p style="color:var(--grey);font-size:0.85rem">For client issues, billing, or pipeline failures</p>
+                  <a href="mailto:dattatraydagale@icloud.com" style="color:var(--blue2);font-size:0.85rem">dattatraydagale@icloud.com</a>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon" style="background:rgba(16,185,129,0.12)">🌐</div>
+                <div class="activity-text">
+                  <p><strong>Public Website</strong></p>
+                  <p style="color:var(--grey);font-size:0.85rem">Share this with potential clients</p>
+                  <a href="index.html" style="color:var(--blue2);font-size:0.85rem">autocontent landing page →</a>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon" style="background:rgba(245,158,11,0.12)">⚙️</div>
+                <div class="activity-text">
+                  <p><strong>GitHub Pipelines</strong></p>
+                  <p style="color:var(--grey);font-size:0.85rem">Manage automation workflows directly</p>
+                  <a href="https://github.com/DagaleDattatray" target="_blank" style="color:var(--blue2);font-size:0.85rem">github.com/DagaleDattatray →</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </main>
 
@@ -942,24 +1052,106 @@
       grid.innerHTML = html;
     }
 
+    // ── BLOG POSTS DATA ──
+    const blogPosts = [
+      { title: "Why Most Indians Get Mutual Funds Wrong",       client: "Antigravity Finance",  status: "published", words: 1650, date: "Apr 25, 2026" },
+      { title: "How to Save Tax Using Section 80C",             client: "CA Sharma & Co",        status: "published", words: 1720, date: "Apr 25, 2026" },
+      { title: "Top 5 Areas to Invest in Mumbai 2026",          client: "Real Estate Hub",       status: "published", words: 1580, date: "Apr 25, 2026" },
+      { title: "Python vs Excel: Which to Learn First",         client: "TechBlog India",        status: "published", words: 1490, date: "Apr 25, 2026" },
+      { title: "Morning Routine That Changed My Life",          client: "FitLife Coach",         status: "published", words: 1600, date: "Apr 24, 2026" },
+      { title: "How to Build a Second Income in Your 20s",      client: "Updates Dattatray",     status: "published", words: 1780, date: "Apr 24, 2026" },
+      { title: "3 Habits for a Calmer Mind",                   client: "MindfulLiving India",   status: "published", words: 1420, date: "Apr 24, 2026" },
+      { title: "Why Every Startup Needs a Content Strategy",    client: "Startup Diary",         status: "draft",     words: 1550, date: "Apr 24, 2026" },
+      { title: "Emergency Fund: Why You Need One",              client: "Antigravity Finance",   status: "published", words: 1690, date: "Apr 23, 2026" },
+      { title: "How ChatGPT is Changing the Way We Work",       client: "TechBlog India",        status: "published", words: 1510, date: "Apr 23, 2026" },
+    ];
+
+    // ── REELS DATA ──
+    const reelsData = [
+      { caption: "Invest Smarter Not Harder",             client: "Updates Dattatray",   status: "published", music: "ES_Surge - Beyza.mp3",       date: "Apr 25, 2026" },
+      { caption: "5 Morning Habits for Peak Performance", client: "FitLife Coach",        status: "published", music: "ES_Aasmaan - Kanika.mp3",     date: "Apr 25, 2026" },
+      { caption: "SIP vs Lumpsum — Which Wins?",          client: "Antigravity Finance",  status: "published", music: "ES_Goals - Luftmensch.mp3",   date: "Apr 24, 2026" },
+      { caption: "AI Tools That 10x Your Productivity",   client: "TechBlog India",       status: "published", music: "ES_Collateral.mp3",           date: "Apr 24, 2026" },
+      { caption: "Real Estate Red Flags in 2026",         client: "Real Estate Hub",      status: "published", music: "ES_Weekend in Sao Paulo.mp3", date: "Apr 23, 2026" },
+      { caption: "3 Tax Saving Tips Before March Ends",   client: "CA Sharma & Co",       status: "published", music: "ES_Why Did I.mp3",            date: "Apr 23, 2026" },
+      { caption: "Why Most People Stay Broke",            client: "Updates Dattatray",    status: "published", music: "ES_Surge - Beyza.mp3",        date: "Apr 22, 2026" },
+      { caption: "Startup Mistakes I Made at 25",         client: "Startup Diary",        status: "draft",     music: "ES_Goals - Luftmensch.mp3",   date: "Apr 22, 2026" },
+    ];
+
+    // ── PIPELINES DATA ──
+    const pipelinesData = [
+      { client: "Antigravity Finance",  blog: "active", reels: "active", lastRun: "9:00 AM today",  nextRun: "9:00 AM tomorrow",  uptime: "99.8%" },
+      { client: "Updates Dattatray",    blog: "active", reels: "active", lastRun: "9:30 AM today",  nextRun: "9:30 AM tomorrow",  uptime: "100%"  },
+      { client: "TechBlog India",       blog: "active", reels: "active", lastRun: "10:00 AM today", nextRun: "10:00 AM tomorrow", uptime: "99.2%" },
+      { client: "FitLife Coach",        blog: "active", reels: "active", lastRun: "11:00 AM today", nextRun: "11:00 AM tomorrow", uptime: "100%"  },
+      { client: "CA Sharma & Co",       blog: "active", reels: "paused", lastRun: "9:00 AM today",  nextRun: "9:00 AM tomorrow",  uptime: "98.5%" },
+      { client: "Startup Diary",        blog: "setup",  reels: "setup",  lastRun: "Setting up...",  nextRun: "Tomorrow",          uptime: "—"     },
+      { client: "Real Estate Hub",      blog: "active", reels: "active", lastRun: "8:30 AM today",  nextRun: "8:30 AM tomorrow",  uptime: "100%"  },
+      { client: "MindfulLiving India",  blog: "active", reels: "active", lastRun: "10:30 AM today", nextRun: "10:30 AM tomorrow", uptime: "99.5%" },
+    ];
+
+    function renderBlogs() {
+      document.getElementById('blog-tbody').innerHTML = blogPosts.map(p => `
+        <tr>
+          <td><div class="client-name">${p.title}</div></td>
+          <td style="color:var(--grey)">${p.client}</td>
+          <td><span class="status-badge ${p.status === 'published' ? 'status-active' : 'status-setup'}">${p.status}</span></td>
+          <td style="color:var(--grey)">${p.words} words</td>
+          <td style="color:var(--grey)">${p.date}</td>
+        </tr>
+      `).join('');
+    }
+
+    function renderReels() {
+      document.getElementById('reels-tbody').innerHTML = reelsData.map(r => `
+        <tr>
+          <td><div class="client-name">${r.caption}</div></td>
+          <td style="color:var(--grey)">${r.client}</td>
+          <td><span class="status-badge ${r.status === 'published' ? 'status-active' : 'status-setup'}">${r.status}</span></td>
+          <td style="color:var(--grey);font-size:0.8rem">${r.music}</td>
+          <td style="color:var(--grey)">${r.date}</td>
+        </tr>
+      `).join('');
+    }
+
+    function renderPipelines() {
+      document.getElementById('pipeline-tbody').innerHTML = pipelinesData.map(p => `
+        <tr>
+          <td><div class="client-name">${p.client}</div></td>
+          <td><span class="status-badge status-${p.blog === 'active' ? 'active' : p.blog === 'setup' ? 'setup' : 'paused'}">${p.blog}</span></td>
+          <td><span class="status-badge status-${p.reels === 'active' ? 'active' : p.reels === 'setup' ? 'setup' : 'paused'}">${p.reels}</span></td>
+          <td style="color:var(--grey);font-size:0.82rem">${p.lastRun}</td>
+          <td style="color:var(--grey);font-size:0.82rem">${p.nextRun}</td>
+          <td style="color:var(--green);font-weight:600">${p.uptime}</td>
+        </tr>
+      `).join('');
+    }
+
     // ── TABS ──
-    function showTab(tab) {
-      ['overview','clients','calendar','activity'].forEach(t => {
-        document.getElementById(`tab-${t}`).style.display = t === tab ? 'block' : 'none';
+    const allTabs = ['overview','clients','calendar','activity','blogs','reels','pipelines','support'];
+
+    function showTab(tab, el) {
+      allTabs.forEach(t => {
+        const el = document.getElementById(`tab-${t}`);
+        if (el) el.style.display = t === tab ? 'block' : 'none';
       });
 
       const titles = {
-        overview: ['Overview', 'Welcome back, Dattatray 👋'],
-        clients:  ['Clients', 'Manage your automation clients'],
-        calendar: ['Content Calendar', 'See what's being published and when'],
-        activity: ['Activity Feed', 'Real-time automation logs'],
+        overview:  ['Overview',           'Welcome back, Dattatray 👋'],
+        clients:   ['Clients',            'Manage your automation clients'],
+        calendar:  ['Content Calendar',   "See what's being published and when"],
+        activity:  ['Activity Feed',      'Real-time automation logs'],
+        blogs:     ['Blog Posts',         'All blog posts published across clients'],
+        reels:     ['Instagram Reels',    'All Reels published across clients'],
+        pipelines: ['Pipelines',          'Monitor your automation pipelines'],
+        support:   ['Support',            'Help and contact information'],
       };
 
       document.getElementById('page-title').textContent = titles[tab][0];
       document.getElementById('page-sub').textContent   = titles[tab][1];
 
-      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-      event?.currentTarget?.classList.add('active');
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      if (el) el.classList.add('active');
     }
 
     // ── MODAL ──
@@ -972,6 +1164,9 @@
     renderClients('client-tbody-full', true);
     renderActivity();
     renderCalendar();
+    renderBlogs();
+    renderReels();
+    renderPipelines();
   </script>
 </body>
 </html>
